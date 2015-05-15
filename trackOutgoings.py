@@ -2,11 +2,12 @@ import sqlite3
 import sys
 import time
 
+DATABASE = 'outgoings.db'
 
-def connectToAndValidateDb():
+def connectToAndValidateDb(db):
     con = None
     try:
-        con = sqlite3.connect('outgoings.db')           
+        con = sqlite3.connect(db)           
         
     except sqlite3.Error, e:
         print "Error %s:" % e.args[0]
@@ -70,22 +71,8 @@ def presentUserOptions(conn):
                 conn.close()
 
 
-def testDatabase():
-    print 'testing'
-    con = sqlite3.connect('outgoings.db')
-    cur = con.cursor()
-    cur.execute("INSERT INTO Expenses VALUES(1, 25.97 ,'misc', 'today')")
-    print 'Inserted'
-
-    cur.execute("INSERT INTO Expenses (Amount, Description, Date) VALUES (25.97 ,'desc_test', 'date_text')")
-    rows = cur.execute("SELECT * FROM Expenses")
-    
-    for i in rows:
-        print i
-
-
 def main():
-    conn = connectToAndValidateDb()
+    conn = connectToAndValidateDb(DATABASE)
     presentUserOptions(conn)
 
 if __name__ == "__main__":
