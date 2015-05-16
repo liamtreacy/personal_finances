@@ -14,7 +14,7 @@ def createUpdateAndReadDB():
     rows = cur.execute("SELECT * FROM Expenses")
     
     if bool(rows) == False:
-        print 'Error, database couldnt be read from'
+        print 'ERROR, database couldnt be read from'
     
     #for i in rows:
     #    print i
@@ -22,18 +22,17 @@ def createUpdateAndReadDB():
 
 def createAndRemoveDB():
     # remove if present
-    if os.path.isfile(TEST_DATABASE):
-        os.remove(TEST_DATABASE)
+    cleanUp()
     
     # create db
     connectToAndValidateDb(TEST_DATABASE)
     
     #verify db created
     if not os.path.isfile(TEST_DATABASE):
-        print 'Error, database not created'
-    
-    # remove db
-    os.remove(TEST_DATABASE)
+        print 'ERROR, database not created'
+    else:   
+        # remove db
+        os.remove(TEST_DATABASE)
 
 
 def cleanUp():
