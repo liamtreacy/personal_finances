@@ -1,0 +1,17 @@
+
+# INCOME
+Amount,Type,Description,Source,ToWhom
+
+Type = Work, Maternity, OneOff, Other
+
+# EXPENSES
+Amount,Type,Description,
+
+
+
+
+
+
+
+
+
