@@ -31,8 +31,7 @@ class CsvBuilderTestCase(unittest.TestCase):
 
     def test_add_income(self):
         c = CsvBuilder()
-        i = Income(IncomeType.WORK, 2500.10, PayeeName.CHRISTY, "Via lodged cheque")
-        c.add_income(i)
+        c.add_income( Income(IncomeType.WORK, 2500.10, PayeeName.CHRISTY, "Via lodged cheque") )
 
         expected_str = "FlowType,SourceType,Amount,Payee,Desc\nINCOME,\"WORK\",2500.10,\"Christy\",\"Via " \
                        "lodged cheque\""
@@ -40,10 +39,9 @@ class CsvBuilderTestCase(unittest.TestCase):
 
     def test_add_multiple_incomes(self):
         c = CsvBuilder()
-        i = Income(IncomeType.WORK, 2500.10, PayeeName.CHRISTY, "Via lodged cheque")
-        j = Income(IncomeType.WORK, 800.45, PayeeName.LIAM, "Bank, transfer")
-        c.add_income(i)
-        c.add_income(j)
+
+        c.add_income( Income(IncomeType.WORK, 2500.10, PayeeName.CHRISTY, "Via lodged cheque") )
+        c.add_income( Income(IncomeType.WORK, 800.45, PayeeName.LIAM, "Bank, transfer") )
 
         expected_str = "FlowType,SourceType,Amount,Payee,Desc\nINCOME,\"WORK\",2500.10,\"Christy\",\"Via " \
                        "lodged cheque\"\nINCOME,\"WORK\",800.45,\"Liam\",\"Bank, transfer\""
@@ -51,8 +49,7 @@ class CsvBuilderTestCase(unittest.TestCase):
 
     def test_add_outgoing(self):
         c = CsvBuilder()
-        i = Outgoing(OutgoingType.HOUSE, 102.34, "Boiler", "Cash in hand")
-        c.add_outgoing(i)
+        c.add_outgoing( Outgoing(OutgoingType.HOUSE, 102.34, "Boiler", "Cash in hand") )
 
         expected_str = "FlowType,SourceType,Amount,Payee,Desc\nOUTGOING,\"HOUSE\",102.34,\"Boiler\",\"Cash " \
                        "in hand\""
@@ -60,10 +57,9 @@ class CsvBuilderTestCase(unittest.TestCase):
 
     def test_add_multiple_outgoings(self):
         c = CsvBuilder()
-        i = Outgoing(OutgoingType.OTHER, 2.34, "Co-op")
-        j = Outgoing(OutgoingType.SAVINGS, 50.00, "Regular savings", "Rainy day fund")
-        c.add_outgoing(i)
-        c.add_outgoing(j)
+
+        c.add_outgoing( Outgoing(OutgoingType.OTHER, 2.34, "Co-op") )
+        c.add_outgoing( Outgoing(OutgoingType.SAVINGS, 50.00, "Regular savings", "Rainy day fund") )
 
         expected_str = "FlowType,SourceType,Amount,Payee,Desc\nOUTGOING,\"OTHER\",2.34,\"Co-op\",\"\"\nOUTGOING," \
                        "\"SAVINGS\",50.00,\"Regular savings\",\"Rainy day fund\""
@@ -71,14 +67,11 @@ class CsvBuilderTestCase(unittest.TestCase):
 
     def test_multiple_income_and_outgoings(self):
         c = CsvBuilder()
-        i = Outgoing(OutgoingType.OTHER, 2.34, "Co-op")
-        j = Income(IncomeType.WORK, 800.45, PayeeName.LIAM, "Bank, transfer")
-        k = Outgoing(OutgoingType.SAVINGS, 50.00, "Regular savings", "Rainy day fund")
-        l = Income(IncomeType.WORK, 2500.10, PayeeName.CHRISTY, "Via lodged cheque")
-        c.add_outgoing(i)
-        c.add_outgoing(k)
-        c.add_income(j)
-        c.add_income(l)
+
+        c.add_outgoing( Outgoing(OutgoingType.OTHER, 2.34, "Co-op") )
+        c.add_outgoing( Outgoing(OutgoingType.SAVINGS, 50.00, "Regular savings", "Rainy day fund") )
+        c.add_income( Income(IncomeType.WORK, 800.45, PayeeName.LIAM, "Bank, transfer") )
+        c.add_income( Income(IncomeType.WORK, 2500.10, PayeeName.CHRISTY, "Via lodged cheque") )
 
         expected_str = "FlowType,SourceType,Amount,Payee,Desc\nOUTGOING,\"OTHER\",2.34,\"Co-op\",\"\"\nOUTGOING," \
                        "\"SAVINGS\",50.00,\"Regular savings\",\"Rainy day fund\"\nINCOME,\"WORK\",800.45,\"Liam\"," \
