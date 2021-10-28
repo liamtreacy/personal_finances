@@ -44,6 +44,13 @@ class IncomeTestCase(unittest.TestCase):
 
         self.assertEqual(income.to_csv_row_str(),"\"WORK\",1200.20,\"Liam\",\"\"")
 
+    def test_income_csv_row_str_with_desc_containing_double_quotes(self):
+        income = Income(IncomeType.OTHER, 11900.21, PayeeName.CHRISTY, "Scary string containing \"double quotes\" "
+                                                                       "right here")
+
+        self.assertEqual(income.to_csv_row_str(),"\"OTHER\",11900.21,\"Christy\",\"Scary string containing \"double "
+                                                 "quotes\" right here\"")
+
 
 if __name__ == '__main__':
     unittest.main()
