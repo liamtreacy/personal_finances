@@ -2,7 +2,6 @@ import unittest
 
 from enum import Enum
 
-
 class IncomeType(Enum):
     WORK = "WORK"
     OTHER = "OTHER"
