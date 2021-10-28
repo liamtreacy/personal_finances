@@ -69,5 +69,21 @@ class CsvBuilderTestCase(unittest.TestCase):
                        "\"SAVINGS\",50.00,\"Regular savings\",\"Rainy day fund\""
         self.assertEqual(c.build(), expected_str)
 
+    def test_multiple_income_and_outgoings(self):
+        c = CsvBuilder()
+        i = Outgoing(OutgoingType.OTHER, 2.34, "Co-op")
+        j = Income(IncomeType.WORK, 800.45, PayeeName.LIAM, "Bank, transfer")
+        k = Outgoing(OutgoingType.SAVINGS, 50.00, "Regular savings", "Rainy day fund")
+        l = Income(IncomeType.WORK, 2500.10, PayeeName.CHRISTY, "Via lodged cheque")
+        c.add_outgoing(i)
+        c.add_outgoing(k)
+        c.add_income(j)
+        c.add_income(l)
+
+        expected_str = "FlowType,SourceType,Amount,Payee,Desc\nOUTGOING,\"OTHER\",2.34,\"Co-op\",\"\"\nOUTGOING," \
+                       "\"SAVINGS\",50.00,\"Regular savings\",\"Rainy day fund\"\nINCOME,\"WORK\",800.45,\"Liam\"," \
+                       "\"Bank, transfer\"\nINCOME,\"WORK\",2500.10,\"Christy\",\"Via lodged cheque\""
+        self.assertEqual(c.build(), expected_str)
+
 if __name__ == '__main__':
     unittest.main()
