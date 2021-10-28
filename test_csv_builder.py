@@ -2,24 +2,40 @@ import unittest
 
 from enum import Enum
 
-from test_income import Income, IncomeType, PayeeName
-from test_outgoing import Outgoing, OutgoingType
-
+class PayeeName(Enum):
+    LIAM = "Liam"
+    CHRISTY = "Christy"
+    OTHER = "OTHER"
 
 class FlowType(Enum):
     INCOME = "INCOME"
     OUTGOING = "OUTGOING"
+
+class MoneyArea(Enum):
+    WORK = "WORK"
+    OTHER = "OTHER"
+    HOUSE = "HOUSE"
+    CAR = "CAR"
+    SAVINGS = "SAVINGS"
+
+class CsvEntry:
+    def __init__(self, flow_type, money_area, amount, payee, desc=""):
+        self.flow_type = flow_type
+        self.money_area = money_area
+        self.amount = amount
+        self.desc = desc
+        self.payee = payee
+
+    def to_csv_row_str(self):
+        return f"{self.flow_type.value},\"{self.money_area.value}\",{self.amount:.2f},\"{self.payee.value}\",\"{self.desc}\""
 
 class CsvBuilder:
     def __init__(self):
         self.header_row = ["FlowType,SourceType,Amount,Payee,Desc"]
         self.rows = []
 
-    def add_income(self, income):
-        self.rows.append(f"{FlowType.INCOME.value},"+income.to_csv_row_str())
-
-    def add_outgoing(self, outgoing):
-        self.rows.append(f"{FlowType.OUTGOING.value},"+outgoing.to_csv_row_str())
+    def add_entry(self, csv_entry):
+        self.rows.append(csv_entry.to_csv_row_str())
 
     def build(self):
         return '\n'.join(self.header_row + self.rows)
@@ -31,7 +47,7 @@ class CsvBuilderTestCase(unittest.TestCase):
 
     def test_add_income(self):
         c = CsvBuilder()
-        c.add_income( Income(IncomeType.WORK, 2500.10, PayeeName.CHRISTY, "Via lodged cheque") )
+        c.add_entry( CsvEntry(FlowType.INCOME, MoneyArea.WORK, 2500.10, PayeeName.CHRISTY, "Via lodged cheque") )
 
         expected_str = "FlowType,SourceType,Amount,Payee,Desc\nINCOME,\"WORK\",2500.10,\"Christy\",\"Via " \
                        "lodged cheque\""
@@ -40,8 +56,8 @@ class CsvBuilderTestCase(unittest.TestCase):
     def test_add_multiple_incomes(self):
         c = CsvBuilder()
 
-        c.add_income( Income(IncomeType.WORK, 2500.10, PayeeName.CHRISTY, "Via lodged cheque") )
-        c.add_income( Income(IncomeType.WORK, 800.45, PayeeName.LIAM, "Bank, transfer") )
+        c.add_entry( CsvEntry(FlowType.INCOME, MoneyArea.WORK, 2500.10, PayeeName.CHRISTY, "Via lodged cheque") )
+        c.add_entry( CsvEntry(FlowType.INCOME, MoneyArea.WORK, 800.45, PayeeName.LIAM, "Bank, transfer") )
 
         expected_str = "FlowType,SourceType,Amount,Payee,Desc\nINCOME,\"WORK\",2500.10,\"Christy\",\"Via " \
                        "lodged cheque\"\nINCOME,\"WORK\",800.45,\"Liam\",\"Bank, transfer\""
@@ -49,32 +65,32 @@ class CsvBuilderTestCase(unittest.TestCase):
 
     def test_add_outgoing(self):
         c = CsvBuilder()
-        c.add_outgoing( Outgoing(OutgoingType.HOUSE, 102.34, "Boiler", "Cash in hand") )
+        c.add_entry( CsvEntry(FlowType.OUTGOING, MoneyArea.HOUSE, 102.34, PayeeName.OTHER, "Cash in hand") )
 
-        expected_str = "FlowType,SourceType,Amount,Payee,Desc\nOUTGOING,\"HOUSE\",102.34,\"Boiler\",\"Cash " \
+        expected_str = "FlowType,SourceType,Amount,Payee,Desc\nOUTGOING,\"HOUSE\",102.34,\"OTHER\",\"Cash " \
                        "in hand\""
         self.assertEqual(c.build(), expected_str)
 
     def test_add_multiple_outgoings(self):
         c = CsvBuilder()
 
-        c.add_outgoing( Outgoing(OutgoingType.OTHER, 2.34, "Co-op") )
-        c.add_outgoing( Outgoing(OutgoingType.SAVINGS, 50.00, "Regular savings", "Rainy day fund") )
+        c.add_entry( CsvEntry(FlowType.OUTGOING, MoneyArea.OTHER, 2.34, PayeeName.OTHER) )
+        c.add_entry( CsvEntry(FlowType.OUTGOING, MoneyArea.SAVINGS, 50.00, PayeeName.OTHER, "Rainy day fund") )
 
-        expected_str = "FlowType,SourceType,Amount,Payee,Desc\nOUTGOING,\"OTHER\",2.34,\"Co-op\",\"\"\nOUTGOING," \
-                       "\"SAVINGS\",50.00,\"Regular savings\",\"Rainy day fund\""
+        expected_str = "FlowType,SourceType,Amount,Payee,Desc\nOUTGOING,\"OTHER\",2.34,\"OTHER\",\"\"\nOUTGOING," \
+                       "\"SAVINGS\",50.00,\"OTHER\",\"Rainy day fund\""
         self.assertEqual(c.build(), expected_str)
 
     def test_multiple_income_and_outgoings(self):
         c = CsvBuilder()
 
-        c.add_outgoing( Outgoing(OutgoingType.OTHER, 2.34, "Co-op") )
-        c.add_outgoing( Outgoing(OutgoingType.SAVINGS, 50.00, "Regular savings", "Rainy day fund") )
-        c.add_income( Income(IncomeType.WORK, 800.45, PayeeName.LIAM, "Bank, transfer") )
-        c.add_income( Income(IncomeType.WORK, 2500.10, PayeeName.CHRISTY, "Via lodged cheque") )
+        c.add_entry( CsvEntry(FlowType.OUTGOING, MoneyArea.OTHER, 2.34, PayeeName.OTHER) )
+        c.add_entry( CsvEntry(FlowType.OUTGOING, MoneyArea.SAVINGS, 50.00, PayeeName.OTHER, "Rainy day fund") )
+        c.add_entry( CsvEntry(FlowType.INCOME, MoneyArea.WORK, 800.45, PayeeName.LIAM, "Bank, transfer") )
+        c.add_entry( CsvEntry(FlowType.INCOME, MoneyArea.WORK, 2500.10, PayeeName.CHRISTY, "Via lodged cheque") )
 
-        expected_str = "FlowType,SourceType,Amount,Payee,Desc\nOUTGOING,\"OTHER\",2.34,\"Co-op\",\"\"\nOUTGOING," \
-                       "\"SAVINGS\",50.00,\"Regular savings\",\"Rainy day fund\"\nINCOME,\"WORK\",800.45,\"Liam\"," \
+        expected_str = "FlowType,SourceType,Amount,Payee,Desc\nOUTGOING,\"OTHER\",2.34,\"OTHER\",\"\"\nOUTGOING," \
+                       "\"SAVINGS\",50.00,\"OTHER\",\"Rainy day fund\"\nINCOME,\"WORK\",800.45,\"Liam\"," \
                        "\"Bank, transfer\"\nINCOME,\"WORK\",2500.10,\"Christy\",\"Via lodged cheque\""
         self.assertEqual(c.build(), expected_str)
 
