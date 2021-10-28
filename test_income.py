@@ -18,6 +18,9 @@ class Income:
         self.desc = desc
         self.payee = payee
 
+    def to_csv_row_str(self):
+        return f"\"{self.income_type.value}\",{self.amount:.2f},\"{self.payee.value}\",\"{self.desc}\""
+
 
 class IncomeTestCase(unittest.TestCase):
     def test_income_creation(self):
@@ -35,6 +38,11 @@ class IncomeTestCase(unittest.TestCase):
         self.assertEqual(income.income_type, IncomeType.WORK)
         self.assertEqual(income.payee, PayeeName.LIAM)
         self.assertEqual(income.desc, "")
+
+    def test_income_csv_row_str(self):
+        income = Income(IncomeType.WORK, 1200.20, PayeeName.LIAM)
+
+        self.assertEqual(income.to_csv_row_str(),"\"work\",1200.20,\"Liam\",\"\"")
 
 
 if __name__ == '__main__':
