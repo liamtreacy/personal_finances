@@ -4,8 +4,8 @@ from enum import Enum
 
 
 class IncomeType(Enum):
-    WORK = "work"
-    OTHER = "other"
+    WORK = "WORK"
+    OTHER = "OTHER"
 
 class PayeeName(Enum):
     LIAM = "Liam"
@@ -42,7 +42,7 @@ class IncomeTestCase(unittest.TestCase):
     def test_income_csv_row_str(self):
         income = Income(IncomeType.WORK, 1200.20, PayeeName.LIAM)
 
-        self.assertEqual(income.to_csv_row_str(),"\"work\",1200.20,\"Liam\",\"\"")
+        self.assertEqual(income.to_csv_row_str(),"\"WORK\",1200.20,\"Liam\",\"\"")
 
 
 if __name__ == '__main__':
