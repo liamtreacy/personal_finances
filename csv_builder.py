@@ -17,6 +17,12 @@ class MoneyArea(Enum):
     SAVINGS = "SAVINGS"
     GROCERIES = "GROCERIES"
 
+def get_money_area():
+    return MoneyArea.WORK
+
+def get_payee():
+    return PayeeName.LIAM
+
 class CsvEntry:
     def __init__(self, flow_type, money_area, amount, payee, desc=""):
         self.flow_type = flow_type
