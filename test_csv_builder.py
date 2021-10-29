@@ -55,6 +55,7 @@ class CsvBuilderTestCase(unittest.TestCase):
         expected_str = "FlowType,SourceType,Amount,Payee,Desc\nOUTGOING,\"OTHER\",2.34,\"OTHER\",\"\"\nOUTGOING," \
                        "\"SAVINGS\",50.00,\"OTHER\",\"Rainy day fund\"\nINCOME,\"WORK\",800.45,\"Liam\"," \
                        "\"Bank, transfer\"\nINCOME,\"WORK\",2500.10,\"Christy\",\"Via lodged cheque\""
+
         self.assertEqual(c.build(), expected_str)
 
 if __name__ == '__main__':

@@ -38,3 +38,6 @@ class CsvBuilder:
 
     def build(self):
         return '\n'.join(self.header_row + self.rows)
+
+    def write_to_file(self, output_file):
+        print(self.build(), file=open(output_file, 'w'))
