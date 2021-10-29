@@ -17,6 +17,7 @@ class MoneyArea(Enum):
     HOUSE = "HOUSE"
     CAR = "CAR"
     SAVINGS = "SAVINGS"
+    GROCERIES = "GROCERIES"
 
 class CsvEntry:
     def __init__(self, flow_type, money_area, amount, payee, desc=""):
