@@ -5,6 +5,9 @@ class PayeeName(Enum):
     CHRISTY = "Christy"
     OTHER = "OTHER"
 
+def PayeeNameToString(payee_name):
+    return ""
+
 class FlowType(Enum):
     INCOME = "INCOME"
     OUTGOING = "OUTGOING"
@@ -18,6 +21,7 @@ class MoneyArea(Enum):
     GROCERIES = "GROCERIES"
 
 def get_money_area():
+    print("Select: 1 - Work, 2 - Other")
     return MoneyArea.WORK
 
 def get_payee():
