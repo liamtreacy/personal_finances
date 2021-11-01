@@ -1,5 +1,8 @@
 from enum import Enum
 
+from test_payee_name import print_payee_names_and_values, number_to_payee
+
+
 class PayeeName(Enum):
     LIAM = "Liam"
     CHRISTY = "Christy"
@@ -25,7 +28,10 @@ def get_money_area():
     return MoneyArea.WORK
 
 def get_payee():
-    return PayeeName.LIAM
+    print("Enter the number corresponding to the Payee")
+    print_payee_names_and_values()
+    payee_num = int(input("> "))
+    return number_to_payee(payee_num)
 
 class CsvEntry:
     def __init__(self, flow_type, money_area, amount, payee, desc=""):

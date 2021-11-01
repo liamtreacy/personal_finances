@@ -17,7 +17,7 @@ def payee_to_string(payee_name_enum):
 def string_to_payee(payee_str):
     return PayeeNameEnum[payee_str.upper()]
 
-def print_name_and_value():
+def print_payee_names_and_values():
     str = ""
     for val in PayeeNameEnum:
         str +=f"{val.value} for {val.name} : "
