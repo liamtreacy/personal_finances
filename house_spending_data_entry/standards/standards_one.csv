@@ -1,0 +1,5 @@
+FlowType,SourceType,Amount,Payee,Desc
+OUTGOING,"OTHER",2.34,"OTHER",""
+OUTGOING,"SAVINGS",50.00,"OTHER","Rainy day fund"
+INCOME,"WORK",800.45,"LIAM","Bank, transfer"
+INCOME,"WORK",2500.10,"CHRISTY","Via lodged cheque"

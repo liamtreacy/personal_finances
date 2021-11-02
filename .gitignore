@@ -45,3 +45,11 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+#
+tmp/
+__pycache__/
+house_spending_data_entry/.idea/*
+.idea/*
+*misc.xml
+*data_entry.iml

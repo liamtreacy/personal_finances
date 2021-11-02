@@ -1,27 +1,7 @@
 import unittest
 
-from enum import Enum
+from src.payee_name import PayeeNameEnum, string_to_payee, payee_to_string, number_to_payee
 
-class PayeeNameEnum(Enum):
-    __order__ = 'OTHER LIAM CHRISTY'
-    OTHER = 0
-    LIAM = 1
-    CHRISTY = 2
-
-def number_to_payee(num):
-    return PayeeNameEnum(num)
-
-def payee_to_string(payee_name_enum):
-    return payee_name_enum.name
-
-def string_to_payee(payee_str):
-    return PayeeNameEnum[payee_str.upper()]
-
-def print_payee_names_and_values():
-    str = ""
-    for val in PayeeNameEnum:
-        str +=f"{val.value} for {val.name} : "
-    print(str)
 
 class PayeeEnumAndFunctionsTestCase(unittest.TestCase):
     def test_PayeeNameEnum_creation_from_number_other(self):
