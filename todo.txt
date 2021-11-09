@@ -1,0 +1,5 @@
+- Move to branch "main" to be consistent with other projects
+- Csv reading and writing seems to be a common thing, might be worth moving it out
+- Expand analysis tests
+
+
