@@ -1,10 +1,11 @@
 from enum import Enum
 
 class PayeeNameEnum(Enum):
-    __order__ = 'OTHER LIAM CHRISTY'
+    __order__ = 'OTHER LIAM CHRISTY LOUISA'
     OTHER = 0
     LIAM = 1
     CHRISTY = 2
+    LOUISA = 3
 
 def number_to_payee(num):
     return PayeeNameEnum(num)

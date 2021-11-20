@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class MoneyAreaEnum(Enum):
-    __order__ = 'OTHER WORK HOUSE CAR SAVINGS GROCERIES INVESTMENTS UTILITIES FINANCE RECREATION'
+    __order__ = 'OTHER WORK HOUSE CAR SAVINGS GROCERIES INVESTMENTS UTILITIES FINANCE RECREATION COUNCILTAX CHARITY CHILDBENEFIT'
     OTHER = 0
     WORK = 1
     HOUSE = 2
@@ -13,6 +13,9 @@ class MoneyAreaEnum(Enum):
     UTILITIES = 7
     FINANCE = 8
     RECREATION = 9
+    COUNCILTAX = 10
+    CHARITY = 11
+    CHILDBENEFIT = 12
 
 def number_to_money_area(num):
     return MoneyAreaEnum(num)
